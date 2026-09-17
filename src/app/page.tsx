@@ -80,10 +80,10 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-bg p-4 sm:p-6">
+    <main className="min-h-screen bg-canvas p-4 sm:p-6">
       <header className="mb-4">
-        <h1 className="text-xl font-semibold text-text">CRM de clientes</h1>
-        <p className="text-sm text-text-muted">Gestioná tus clientes de punta a punta, en un solo lugar.</p>
+        <h1 className="text-[22px] leading-[1.4] tracking-[-0.2px] font-semibold text-ink">CRM de clientes</h1>
+        <p className="text-sm text-muted">Gestioná tus clientes de punta a punta, en un solo lugar.</p>
       </header>
 
       <SummaryPanel clientes={clientes} />
@@ -131,7 +131,7 @@ export default function Home() {
       )}
 
       <footer className="mt-6 text-center">
-        <p className="text-xs text-text-muted">
+        <p className="text-xs text-muted">
           Los datos viven solo en esta sesión del navegador. Usá &quot;Exportar JSON&quot; para guardarlos.
         </p>
       </footer>

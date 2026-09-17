@@ -30,12 +30,12 @@ export default function SearchFilterBar({
         placeholder="Buscar por nombre..."
         value={busqueda}
         onChange={(e) => onBusquedaChange(e.target.value)}
-        className="rounded-lg border border-border px-3 py-1.5 text-sm flex-1 min-w-[180px] bg-surface focus:outline-none focus:border-accent"
+        className="rounded-input border border-divider bg-card px-3 py-1.5 text-sm flex-1 min-w-[180px] focus:outline-none focus:ring-2 focus:ring-focus"
       />
       <select
         value={etiquetaSeleccionada}
         onChange={(e) => onEtiquetaChange(e.target.value)}
-        className="rounded-lg border border-border px-2 py-1.5 text-sm bg-surface focus:outline-none focus:border-accent"
+        className="rounded-input border border-divider bg-card px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-focus"
       >
         <option value="">Todas las etiquetas</option>
         {etiquetas.map((e) => (
@@ -46,25 +46,25 @@ export default function SearchFilterBar({
       </select>
       <button
         onClick={onNuevoCliente}
-        className="rounded-lg bg-accent text-white text-sm px-3 py-1.5 hover:bg-accent-strong transition-colors"
+        className="rounded-pill bg-accent text-white text-sm font-medium px-4 py-1.5 hover:bg-accent-hover transition-colors"
       >
         Nuevo cliente
       </button>
       <button
         onClick={onExportar}
-        className="rounded-lg border border-border text-sm px-3 py-1.5 bg-surface hover:bg-accent-soft transition-colors"
+        className="rounded-pill border border-accent text-accent bg-card text-sm font-medium px-4 py-1.5 hover:bg-wash transition-colors"
       >
         Exportar JSON
       </button>
       <button
         onClick={onImportarClick}
-        className="rounded-lg border border-border text-sm px-3 py-1.5 bg-surface hover:bg-accent-soft transition-colors"
+        className="rounded-pill border border-accent text-accent bg-card text-sm font-medium px-4 py-1.5 hover:bg-wash transition-colors"
       >
         Importar JSON
       </button>
       <button
         onClick={onEmpezarDeCero}
-        className="rounded-lg border border-border text-sm px-3 py-1.5 bg-surface text-alert hover:bg-alert-soft transition-colors"
+        className="rounded-pill border border-dot-red text-dot-red bg-card text-sm font-medium px-4 py-1.5 hover:bg-dot-red-soft transition-colors"
       >
         Empezar de cero
       </button>
