@@ -1,69 +1,140 @@
-import Image from "next/image";
+"use client";
+
+import { useMemo, useRef, useState } from "react";
+import { Cliente, Etapa, ETAPAS } from "@/lib/types";
+import { crearClientesDeEjemplo } from "@/lib/seedData";
+import { exportarClientes, parsearImportacion } from "@/lib/utils";
+import KanbanColumn from "@/components/KanbanColumn";
+import SummaryPanel from "@/components/SummaryPanel";
+import SearchFilterBar from "@/components/SearchFilterBar";
+import ClientModal from "@/components/ClientModal";
 
 export default function Home() {
+  const [clientes, setClientes] = useState<Cliente[]>(() => crearClientesDeEjemplo());
+  const [busqueda, setBusqueda] = useState("");
+  const [etiquetaSeleccionada, setEtiquetaSeleccionada] = useState("");
+  const [clienteEnEdicion, setClienteEnEdicion] = useState<Cliente | null | undefined>(undefined);
+  const inputImportarRef = useRef<HTMLInputElement>(null);
+
+  const etiquetas = useMemo(
+    () => Array.from(new Set(clientes.map((c) => c.etiqueta).filter(Boolean))),
+    [clientes]
+  );
+
+  const clientesFiltrados = useMemo(() => {
+    return clientes.filter((c) => {
+      const coincideBusqueda = c.nombre.toLowerCase().includes(busqueda.toLowerCase());
+      const coincideEtiqueta = !etiquetaSeleccionada || c.etiqueta === etiquetaSeleccionada;
+      return coincideBusqueda && coincideEtiqueta;
+    });
+  }, [clientes, busqueda, etiquetaSeleccionada]);
+
+  function moverCliente(id: string, etapa: Etapa) {
+    setClientes((prev) => prev.map((c) => (c.id === id ? { ...c, etapa } : c)));
+  }
+
+  function handleDragStart(e: React.DragEvent, id: string) {
+    e.dataTransfer.setData("text/plain", id);
+  }
+
+  function handleDrop(etapa: Etapa, e: React.DragEvent) {
+    const id = e.dataTransfer.getData("text/plain");
+    if (id) moverCliente(id, etapa);
+  }
+
+  function guardarCliente(cliente: Cliente) {
+    setClientes((prev) => {
+      const existe = prev.some((c) => c.id === cliente.id);
+      if (existe) return prev.map((c) => (c.id === cliente.id ? cliente : c));
+      return [...prev, cliente];
+    });
+    setClienteEnEdicion(undefined);
+  }
+
+  function eliminarCliente(id: string) {
+    setClientes((prev) => prev.filter((c) => c.id !== id));
+    setClienteEnEdicion(undefined);
+  }
+
+  function empezarDeCero() {
+    const confirmado = window.confirm(
+      "¿Seguro que querés borrar todos los clientes? Esta acción no se puede deshacer."
+    );
+    if (confirmado) setClientes([]);
+  }
+
+  function importar(e: React.ChangeEvent<HTMLInputElement>) {
+    const archivo = e.target.files?.[0];
+    if (!archivo) return;
+    const lector = new FileReader();
+    lector.onload = () => {
+      try {
+        const nuevos = parsearImportacion(String(lector.result));
+        setClientes(nuevos);
+      } catch {
+        window.alert("No se pudo leer el archivo. Verificá que sea un JSON exportado desde esta app.");
+      }
+    };
+    lector.readAsText(archivo);
+    e.target.value = "";
+  }
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <main className="min-h-screen bg-neutral-100 p-4 sm:p-6">
+      <header className="mb-4">
+        <h1 className="text-xl font-semibold text-neutral-900">CRM de clientes</h1>
+        <p className="text-sm text-neutral-500">Gestioná tus clientes de punta a punta, en un solo lugar.</p>
+      </header>
+
+      <SummaryPanel clientes={clientes} />
+
+      <SearchFilterBar
+        busqueda={busqueda}
+        onBusquedaChange={setBusqueda}
+        etiquetaSeleccionada={etiquetaSeleccionada}
+        etiquetas={etiquetas}
+        onEtiquetaChange={setEtiquetaSeleccionada}
+        onNuevoCliente={() => setClienteEnEdicion(null)}
+        onExportar={() => exportarClientes(clientes)}
+        onImportarClick={() => inputImportarRef.current?.click()}
+        onEmpezarDeCero={empezarDeCero}
+      />
+      <input
+        ref={inputImportarRef}
+        type="file"
+        accept="application/json"
+        onChange={importar}
+        className="hidden"
+      />
+
+      <div className="flex gap-3 overflow-x-auto pb-2">
+        {ETAPAS.map((etapa) => (
+          <KanbanColumn
+            key={etapa.id}
+            etapa={etapa.id}
+            titulo={etapa.titulo}
+            clientes={clientesFiltrados.filter((c) => c.etapa === etapa.id)}
+            onCardClick={(id) => setClienteEnEdicion(clientes.find((c) => c.id === id) ?? null)}
+            onDragStart={handleDragStart}
+            onDrop={handleDrop}
+          />
+        ))}
+      </div>
+
+      {clienteEnEdicion !== undefined && (
+        <ClientModal
+          cliente={clienteEnEdicion}
+          onClose={() => setClienteEnEdicion(undefined)}
+          onGuardar={guardarCliente}
+          onEliminar={eliminarCliente}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      )}
+
+      <footer className="mt-6 text-center">
+        <p className="text-xs text-neutral-400">
+          Los datos viven solo en esta sesión del navegador. Usá &quot;Exportar JSON&quot; para guardarlos.
+        </p>
+      </footer>
+    </main>
   );
 }

@@ -1,0 +1,151 @@
+import { Cliente } from "./types";
+
+function haceDias(dias: number): string {
+  const d = new Date();
+  d.setDate(d.getDate() - dias);
+  return d.toISOString().slice(0, 10);
+}
+
+function enDias(dias: number): string {
+  const d = new Date();
+  d.setDate(d.getDate() + dias);
+  return d.toISOString().slice(0, 10);
+}
+
+export function crearClientesDeEjemplo(): Cliente[] {
+  return [
+    {
+      id: "c1",
+      nombre: "Panadería El Trigal",
+      servicio: "Gestión de redes sociales",
+      monto: 180000,
+      etiqueta: "Redes sociales",
+      responsable: "Andrea",
+      etapa: "prospecto",
+      fechaProximoContacto: enDias(3),
+      fechaUltimoContacto: haceDias(2),
+      progreso: 0,
+      notas: [{ id: "n1", fecha: haceDias(2), texto: "Primer contacto por Instagram, interesados en plan mensual." }],
+    },
+    {
+      id: "c2",
+      nombre: "Estudio Jurídico Belgrano",
+      servicio: "SEO + contenido web",
+      monto: 320000,
+      etiqueta: "SEO",
+      responsable: "Andrea",
+      etapa: "prospecto",
+      fechaProximoContacto: enDias(5),
+      fechaUltimoContacto: haceDias(18),
+      progreso: 0,
+      notas: [],
+    },
+    {
+      id: "c3",
+      nombre: "Gimnasio Fuerza Sur",
+      servicio: "Campaña de lanzamiento",
+      monto: 250000,
+      etiqueta: "Publicidad paga",
+      responsable: "Andrea",
+      etapa: "propuesta",
+      fechaProximoContacto: enDias(2),
+      fechaUltimoContacto: haceDias(4),
+      progreso: 0,
+      notas: [{ id: "n2", fecha: haceDias(4), texto: "Se envió propuesta con dos paquetes de campaña." }],
+    },
+    {
+      id: "c4",
+      nombre: "Clínica Dental Sonrisas",
+      servicio: "Rediseño de marca",
+      monto: 410000,
+      etiqueta: "Branding",
+      responsable: "Andrea",
+      etapa: "propuesta",
+      fechaProximoContacto: enDias(1),
+      fechaUltimoContacto: haceDias(20),
+      progreso: 0,
+      notas: [],
+    },
+    {
+      id: "c5",
+      nombre: "Vinoteca La Cava",
+      servicio: "Gestión de redes + fotografía",
+      monto: 220000,
+      etiqueta: "Redes sociales",
+      responsable: "Andrea",
+      etapa: "activo",
+      fechaProximoContacto: enDias(7),
+      fechaUltimoContacto: haceDias(3),
+      progreso: 65,
+      notas: [
+        { id: "n3", fecha: haceDias(20), texto: "Arrancamos con el calendario de contenidos de octubre." },
+        { id: "n4", fecha: haceDias(3), texto: "Aprobaron las fotos del catálogo nuevo." },
+      ],
+    },
+    {
+      id: "c6",
+      nombre: "Inmobiliaria del Puerto",
+      servicio: "Publicidad paga + landing",
+      monto: 500000,
+      etiqueta: "Publicidad paga",
+      responsable: "Andrea",
+      etapa: "activo",
+      fechaProximoContacto: enDias(4),
+      fechaUltimoContacto: haceDias(6),
+      progreso: 40,
+      notas: [{ id: "n5", fecha: haceDias(6), texto: "Landing en revisión, falta el formulario de contacto." }],
+    },
+    {
+      id: "c7",
+      nombre: "Café de Barrio",
+      servicio: "Gestión de redes sociales",
+      monto: 150000,
+      etiqueta: "Redes sociales",
+      responsable: "Andrea",
+      etapa: "activo",
+      fechaProximoContacto: enDias(10),
+      fechaUltimoContacto: haceDias(16),
+      progreso: 85,
+      notas: [],
+    },
+    {
+      id: "c8",
+      nombre: "Ferretería Central",
+      servicio: "SEO local",
+      monto: 200000,
+      etiqueta: "SEO",
+      responsable: "Andrea",
+      etapa: "cerrado",
+      fechaProximoContacto: enDias(30),
+      fechaUltimoContacto: haceDias(9),
+      progreso: 100,
+      notas: [{ id: "n6", fecha: haceDias(9), texto: "Proyecto cerrado, quedó andando el mantenimiento mensual." }],
+    },
+    {
+      id: "c9",
+      nombre: "Taller Mecánico Sur",
+      servicio: "Branding + papelería",
+      monto: 280000,
+      etiqueta: "Branding",
+      responsable: "Andrea",
+      etapa: "cerrado",
+      fechaProximoContacto: enDias(60),
+      fechaUltimoContacto: haceDias(12),
+      progreso: 100,
+      notas: [],
+    },
+    {
+      id: "c10",
+      nombre: "Librería Andina",
+      servicio: "Campaña de fin de año",
+      monto: 190000,
+      etiqueta: "Publicidad paga",
+      responsable: "Andrea",
+      etapa: "cerrado",
+      fechaProximoContacto: enDias(45),
+      fechaUltimoContacto: haceDias(25),
+      progreso: 100,
+      notas: [{ id: "n7", fecha: haceDias(25), texto: "Buenos resultados, quedan conformes con las métricas finales." }],
+    },
+  ];
+}
