@@ -20,11 +20,11 @@ export default function KanbanColumn({ etapa, titulo, clientes, onCardClick, onD
     <div
       onDragOver={(e) => e.preventDefault()}
       onDrop={(e) => onDrop(etapa, e)}
-      className="flex-1 min-w-[240px] bg-neutral-50 rounded-xl border border-neutral-200 p-3 flex flex-col"
+      className="flex-1 min-w-[240px] bg-surface rounded-lg border border-border p-3 flex flex-col"
     >
       <div className="mb-3">
-        <h3 className="text-sm font-semibold text-neutral-800">{titulo}</h3>
-        <p className="text-xs text-neutral-500">
+        <h3 className="text-sm font-semibold text-text">{titulo}</h3>
+        <p className="text-xs text-text-muted">
           {clientes.length} {clientes.length === 1 ? "cliente" : "clientes"} · {formatoMoneda(totalMonto)}
         </p>
       </div>
@@ -38,7 +38,7 @@ export default function KanbanColumn({ etapa, titulo, clientes, onCardClick, onD
           />
         ))}
         {clientes.length === 0 && (
-          <p className="text-xs text-neutral-400 text-center mt-6">Sin clientes en esta etapa</p>
+          <p className="text-xs text-text-muted text-center mt-6">Sin clientes en esta etapa</p>
         )}
       </div>
     </div>

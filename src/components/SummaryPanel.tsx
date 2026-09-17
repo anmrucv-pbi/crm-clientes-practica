@@ -14,10 +14,10 @@ export default function SummaryPanel({ clientes }: Props) {
         const enEtapa = clientes.filter((c) => c.etapa === etapa.id);
         const total = enEtapa.reduce((acc, c) => acc + c.monto, 0);
         return (
-          <div key={etapa.id} className="rounded-lg border border-neutral-200 bg-white p-3">
-            <p className="text-xs text-neutral-500">{etapa.titulo}</p>
-            <p className="text-lg font-semibold text-neutral-900">{enEtapa.length}</p>
-            <p className="text-xs text-neutral-500">{formatoMoneda(total)}</p>
+          <div key={etapa.id} className="rounded-lg border border-border bg-surface p-3">
+            <p className="text-xs text-text-muted">{etapa.titulo}</p>
+            <p className="text-lg font-semibold text-text">{enEtapa.length}</p>
+            <p className="text-xs text-text-muted">{formatoMoneda(total)}</p>
           </div>
         );
       })}
