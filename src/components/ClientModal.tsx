@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Cliente, Etapa, ETAPAS } from "@/lib/types";
+import { Cliente, Etapa, ETAPAS, RUBROS, SERVICIOS } from "@/lib/types";
 import { formatoFecha, nuevoId } from "@/lib/utils";
 
 interface Props {
@@ -77,11 +77,18 @@ export default function ClientModal({ cliente, onClose, onGuardar, onEliminar }:
           </div>
           <div>
             <label className={campoLabel}>Servicio</label>
-            <input
+            <select
               value={form.servicio}
               onChange={(e) => actualizar("servicio", e.target.value)}
               className={campoInput}
-            />
+            >
+              <option value="">Seleccionar...</option>
+              {SERVICIOS.map((s) => (
+                <option key={s} value={s}>
+                  {s}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
@@ -94,12 +101,19 @@ export default function ClientModal({ cliente, onClose, onGuardar, onEliminar }:
               />
             </div>
             <div>
-              <label className={campoLabel}>Etiqueta</label>
-              <input
+              <label className={campoLabel}>Rubro</label>
+              <select
                 value={form.etiqueta}
                 onChange={(e) => actualizar("etiqueta", e.target.value)}
                 className={campoInput}
-              />
+              >
+                <option value="">Seleccionar...</option>
+                {RUBROS.map((r) => (
+                  <option key={r} value={r}>
+                    {r}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-3">

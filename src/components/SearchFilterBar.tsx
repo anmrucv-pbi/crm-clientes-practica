@@ -37,7 +37,7 @@ export default function SearchFilterBar({
         onChange={(e) => onEtiquetaChange(e.target.value)}
         className="rounded-input border border-divider bg-card px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-focus"
       >
-        <option value="">Todas las etiquetas</option>
+        <option value="">Todos los rubros</option>
         {etiquetas.map((e) => (
           <option key={e} value={e}>
             {e}

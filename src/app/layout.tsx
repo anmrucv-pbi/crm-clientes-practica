@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "CRM de clientes",
-  description: "CRM liviano para gestionar clientes de una consultora de marketing.",
+  title: "CRM de clientes — Zentenio",
+  description: "CRM interno de práctica para hacer seguimiento de clientes y proyectos de datos e IA.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

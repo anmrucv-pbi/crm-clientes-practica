@@ -2,34 +2,50 @@
 
 ## 1. Contexto y objetivo
 
-App para que una consultora de marketing independiente gestione sus clientes
-en distintas etapas comerciales, desde el primer contacto hasta el cierre,
-sin depender de planillas sueltas. Uso individual (una sola persona), sin
-backend ni base de datos: los datos viven en memoria durante la sesión y se
-persisten manualmente exportando/importando un archivo JSON.
+App de práctica para adaptar el flujo de trabajo de Zentenio (consultora de
+datos e inteligencia artificial: integración de datos, dashboards, calidad y
+seguridad de datos, productos digitales y soluciones de IA) a un caso real:
+un CRM para hacer seguimiento comercial de clientes, desde el primer contacto
+hasta el cierre, sin depender de planillas sueltas. Uso individual (una sola
+persona), sin backend ni base de datos: los datos viven en memoria durante la
+sesión y se persisten manualmente exportando/importando un archivo JSON.
+
+Zentenio atiende clientes de varios rubros (farmacéutica, energía, logística,
+distribución, finanzas) con cinco líneas de servicio. El CRM usa esos mismos
+rubros y servicios como valores de referencia (ver Feature 2), aunque los
+diez clientes de ejemplo son ficticios, no clientes reales de la empresa.
 
 ## 2. Usuario
 
-Consultora/o de marketing independiente que gestiona sus propios clientes y
-proyectos, sin equipo detrás. Un solo rol, sin permisos diferenciados.
+Persona de Zentenio (por ejemplo, del equipo comercial o de delivery) que
+gestiona su propia cartera de clientes y proyectos, sin equipo detrás dentro
+de esta app. Un solo rol, sin permisos diferenciados.
 
 ## 3. Épica única: Gestión comercial de clientes
 
 ### Feature 1 — Tablero kanban de etapas
 Descripción: cuatro columnas (Prospecto, Propuesta enviada, Activo, Cerrado).
 Las tarjetas de cliente se arrastran entre columnas para reflejar el avance.
+Cada columna muestra un punto de color distinto para identificar la etapa
+de un vistazo.
 Criterios de aceptación:
 - Existen exactamente 4 columnas, en ese orden.
 - Una tarjeta se puede arrastrar y soltar en cualquier columna.
 - Al soltarla, la etapa del cliente se actualiza y persiste en memoria.
 
 ### Feature 2 — Ficha de cliente
-Descripción: cada tarjeta guarda nombre, servicio, monto del proyecto,
-etiqueta de categoría, responsable y fecha de próximo contacto.
+Descripción: cada tarjeta guarda nombre, servicio, monto del proyecto, rubro,
+responsable y fecha de próximo contacto. El servicio y el rubro se eligen de
+listas fijas basadas en la oferta real de Zentenio:
+- Servicios: integración y automatización de datos, calidad y seguridad de
+  datos, dashboards e información en tiempo real, desarrollo de productos
+  digitales, soluciones de inteligencia artificial.
+- Rubros: farmacéutica, energía, logística, distribución, finanzas.
 Criterios de aceptación:
 - Se puede crear un cliente nuevo con todos esos campos.
 - Se puede editar un cliente existente desde su tarjeta.
 - Los campos obligatorios (nombre, monto) no pueden quedar vacíos al guardar.
+- Servicio y rubro se seleccionan de la lista fija, no se escriben a mano.
 
 ### Feature 3 — Alerta de contacto vencido
 Descripción: si pasaron más de 14 días desde el último contacto registrado,
@@ -46,10 +62,10 @@ Criterios de aceptación:
 - El valor va de 0 a 100.
 
 ### Feature 5 — Buscador y filtro
-Descripción: buscador por nombre de cliente y filtro por etiqueta de categoría.
+Descripción: buscador por nombre de cliente y filtro por rubro.
 Criterios de aceptación:
 - El buscador filtra en tiempo real (sin botón de confirmar).
-- El filtro por etiqueta se puede combinar con el buscador.
+- El filtro por rubro se puede combinar con el buscador.
 - Ambos aplican sobre las 4 columnas a la vez.
 
 ### Feature 6 — Panel de resumen
@@ -83,12 +99,16 @@ Criterios de aceptación:
 
 ## 5. Datos de ejemplo
 
-Diez clientes ficticios repartidos en las cuatro etapas, con montos y fechas
-creíbles, cargados al iniciar la app. El botón "Empezar de cero" limpia todo,
-sin volver a cargar estos ejemplos.
+Diez clientes ficticios repartidos en las cuatro etapas, con nombres de
+fantasía inspirados en los rubros reales de Zentenio (farmacéutica, energía,
+logística, distribución, finanzas) — no son clientes reales de la empresa,
+ni los montos/estados reflejan información real de facturación. Se cargan al
+iniciar la app. El botón "Empezar de cero" limpia todo, sin volver a cargar
+estos ejemplos.
 
 ## 6. Diseño
 
-Diseño plano: sin sombras difusas, sin degradados, sin íconos 3D. Tarjetas con
-borde fino y esquinas redondeadas. Tipografía sans, sentence case. Paleta de
-tres colores como máximo, con un solo color saturado como acento.
+Se sigue el archivo `docs/design.md` (estilo "Relate", tomado de Refero
+Styles): tipografía Inter, paleta con un solo acento azul, radios en dos
+niveles (8px en tarjetas, 16px en columnas, botones en pill), sombras suaves
+en vez de bordes marcados y puntos de color por etapa en el kanban.

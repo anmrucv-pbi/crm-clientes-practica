@@ -82,8 +82,8 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-canvas p-4 sm:p-6">
       <header className="mb-4">
-        <h1 className="text-[22px] leading-[1.4] tracking-[-0.2px] font-semibold text-ink">CRM de clientes</h1>
-        <p className="text-sm text-muted">Gestioná tus clientes de punta a punta, en un solo lugar.</p>
+        <h1 className="text-[22px] leading-[1.4] tracking-[-0.2px] font-semibold text-ink">CRM de clientes — Zentenio</h1>
+        <p className="text-sm text-muted">Seguimiento de clientes y proyectos de datos e IA, de punta a punta.</p>
       </header>
 
       <SummaryPanel clientes={clientes} />

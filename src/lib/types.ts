@@ -7,6 +7,24 @@ export const ETAPAS: { id: Etapa; titulo: string }[] = [
   { id: "cerrado", titulo: "Cerrado" },
 ];
 
+// Líneas de servicio reales de Zentenio (zentenio.com)
+export const SERVICIOS = [
+  "Integración y automatización de datos",
+  "Calidad y seguridad de datos",
+  "Dashboards e información en tiempo real",
+  "Desarrollo de productos digitales",
+  "Soluciones de inteligencia artificial",
+] as const;
+
+// Rubros de los clientes que atiende Zentenio
+export const RUBROS = [
+  "Farmacéutica",
+  "Energía",
+  "Logística",
+  "Distribución",
+  "Finanzas",
+] as const;
+
 export interface Nota {
   id: string;
   fecha: string; // ISO date
@@ -18,7 +36,7 @@ export interface Cliente {
   nombre: string;
   servicio: string;
   monto: number;
-  etiqueta: string;
+  etiqueta: string; // rubro del cliente
   responsable: string;
   etapa: Etapa;
   fechaProximoContacto: string; // ISO date
